@@ -7,7 +7,6 @@ import application.exception.UserNotFoundException;
 import application.model.Role;
 import application.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -94,7 +93,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<ResponseDto> updateUser(UserDtoWithRoles userDtoWithRoles, String login) throws UserNotFoundException {
         User user = userDao.getOneByLogin(login);
-        if (existsByLogin(userDtoWithRoles.getLogin()) && !userDtoWithRoles.getLogin().equals(userDtoWithRoles.getLogin())) {
+        if (existsByLogin(userDtoWithRoles.getLogin()) && !userDtoWithRoles.getLogin().equals(login)) {
             ErrorResponseDto errorResponseDto = new ErrorResponseDto(false);
             errorResponseDto.setErrors(new ArrayList<>());
             errorResponseDto.getErrors().add("This username " + userDtoWithRoles.getLogin() + " is already used by another user.");
